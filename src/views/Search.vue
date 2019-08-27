@@ -1,10 +1,17 @@
 <template>
     <div class="overflow-auto">
+        <b-input-group prepend="Search" class="mt-3">
+            <b-form-input ref="search" v-model="query" v-on:keyup.enter="search"></b-form-input>
+            <b-input-group-append>
+                <b-button variant="success" v-on:click="search">Go</b-button>
+            </b-input-group-append>
+        </b-input-group>
         <template v-if="searching">
             <b-spinner label="Loading..."></b-spinner>
         </template>
         <template v-else>
-            <p class="mt-3">Current Page: {{ currentPage }}</p>
+            
+            <p class="mt-3">Total Results: {{ totalResults }}</p>
             <b-table
                     id="my-table"
                     :items="items"
@@ -13,7 +20,7 @@
 
             <b-pagination
                     v-model="currentPage"
-                    :total-rows="rows"
+                    :total-rows="totalResults"
                     :per-page="perPage"
                     aria-controls="my-table"
             ></b-pagination>
@@ -30,29 +37,24 @@
         data() {
             return {
                 searching: false,
-                perPage: 3,
+                query: null,
+                perPage: 5,
                 currentPage: 1,
-                rows: 0,
-                items: [
-                    {id: 1, first_name: 'Fred', last_name: 'Flintstone'},
-                    {id: 2, first_name: 'Wilma', last_name: 'Flintstone'},
-                    {id: 3, first_name: 'Barney', last_name: 'Rubble'},
-                    {id: 4, first_name: 'Betty', last_name: 'Rubble'},
-                    {id: 5, first_name: 'Pebbles', last_name: 'Flintstone'},
-                    {id: 6, first_name: 'Bamm Bamm', last_name: 'Rubble'},
-                    {id: 7, first_name: 'The Great', last_name: 'Gazzoo'},
-                    {id: 8, first_name: 'Rockhead', last_name: 'Slate'},
-                    {id: 9, first_name: 'Pearl', last_name: 'Slaghoople'}
-                ]
+                totalResults: 0,
+                items: []
             }
         },
         methods: {
             search() {
                 let self = this
                 self.searching = true
-                hotelapi.search("*", self.currentPage, self.perPage, (response) => {
+                
+                let searchTerm = self.query ? self.query : "*"
+                
+                
+                hotelapi.search(searchTerm, self.currentPage, self.perPage, (response) => {
                     let data = response.data
-                    self.rows = data['@odata.count']
+                    self.totalResults = data['@odata.count']
                     self.items = data.value.map((x) => {
                         let address = x.Address
                         return {
@@ -66,18 +68,17 @@
                     console.error(error)
                 }, () => {
                     self.searching = false
+                    self.$refs.search.$el.focus()
                 })
             }
         },
         watch:{
             currentPage: function(newVal, oldVal){
                 this.search()
-            }
+            },
         },
         computed: {
-            rows() {
-                return this.items.length
-            }
+            
         },
         created() {
             let self = this
