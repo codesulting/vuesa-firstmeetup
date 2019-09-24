@@ -1,21 +1,50 @@
-.DS_Store
-node_modules
-/dist
++# Autosave files
+*~
 
-# local env files
-.env.local
-.env.*.local
+# build
+[Oo]bj/
+[Bb]in/
+packages/
+TestResults/
 
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Editor directories and files
-.idea
-.vscode
+# globs
+Makefile.in
+*.DS_Store
+*.sln.cache
 *.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+*.cache
+*.pidb
+*.userprefs
+*.usertasks
+config.log
+config.make
+config.status
+aclocal.m4
+install-sh
+autom4te.cache/
+*.user
+*.tar.gz
+tarballs/
+test-results/
+Thumbs.db
+.vs/
+
+# Mac bundle stuff
+*.dmg
+*.app
+
+# resharper
+*_Resharper.*
+*.Resharper
+
+# dotCover
+*.dotCover
+
+# rider
+.idea/
+.vs/CreditManager/xs/sqlite3/storage.ide-wal
+/Source/Application/OJS.App.Web/appsettings.Development.json
+/Source/Application/OJS.App.Admin/out/*
+.vscode/
+Source/Application/Kensho.App.Web/wwwroot/dist/
+/Source/Application/demo.web.ui/node_modules/
