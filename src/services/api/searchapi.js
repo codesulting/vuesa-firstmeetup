@@ -18,7 +18,7 @@ const hotelapi = {
                 '$top': resultsPerPage,
                 '$skip': (resultsPerPage * page) - (resultsPerPage),
                 'searchFields': 'HotelId,HotelName,Address/StreetAddress,Address/City,Address/StateProvince,Address/PostalCode,Address/Country',
-                'search': query
+                'search': query 
             }
         }).then(onSuccess).catch(onError).finally(onFinally)
     }
