@@ -38,7 +38,7 @@
             return {
                 searching: false,
                 query: null,
-                perPage: 5,
+                perPage: 2,
                 currentPage: 1,
                 totalResults: 0,
                 items: []
@@ -58,10 +58,11 @@
                     self.items = data.value.map((x) => {
                         let address = x.Address
                         return {
-                            HotelId: x.HotelId,
-                            HotelName: x.HotelName,
-                            Rating: x.Rating,
-                            Address: address.StreetAddress + " " + address.City + " " + address.StateProvince + " " + address.PostalCode + " " + address.Country
+                            PublicID: x.PublicID,
+                            Name: x.Name,
+                            Image: x.Image,
+                            Manufacturer: x.Manufacturer,
+                            //Address: address.StreetAddress + " " + address.City + " " + address.StateProvince + " " + address.PostalCode + " " + address.Country
                         }
                     })
                 }, (error) => {
