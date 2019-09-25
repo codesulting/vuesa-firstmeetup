@@ -93,13 +93,21 @@ namespace demo.functions
                     Manufacturer = "Microsoft"
                 }
             };
-            IEnumerable<Suggester> suggesters = new List<Suggester>();
+            IEnumerable<Suggester> suggesters = new List<Suggester>()
+            {
+                new Suggester()
+                {
+                    Name = "sg",
+                    SourceFields = new[] {"Name", "Manufacturer"}
+                }
+            };
             await commandSender.Execute(SyncAzureSearchIndexCommand.For("demo-store-index", models, suggesters, true));
 
             return null;
         }
     }
-
+    //https://codesultingkenshodev.search.windows.net/indexes/demo-store-index/docs/suggest?api-version=2019-05-06&search=micro&$top=3&suggesterName=sg&searchFields=ZIPBR&$select=ZIPBR&fuzzy=true&highlightPreTag=<b>&highlightPostTag=</b>
+    //https://codesultingkenshodev.search.windows.net/indexes/demo-store-index/docs/autocomplete?api-version=2019-05-06&search=uhd&suggesterName=sg&searchFields=Name&highlightPreTag=<b>&highlightPostTag=</b>&AutocompleteMode=TwoTerms
     public class StoreItem
     {
         [System.ComponentModel.DataAnnotations.Key, IsFacetable, IsFilterable]

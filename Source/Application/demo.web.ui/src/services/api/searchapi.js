@@ -22,7 +22,8 @@ const hotelapi = {
                 'search': query 
             }
         }).then(onSuccess).catch(onError).finally(onFinally)
-    }
+    },
+    
 }
 
 export {
